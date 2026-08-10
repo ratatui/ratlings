@@ -11,8 +11,6 @@ final_message = """
 You finished Ratlings! 🎉
 """
 
-exercises = []
-
 # Add exercise metadata here. See CONTRIBUTING.md and the Rustlings community
 # exercises guide: https://rustlings.rust-lang.org/community-exercises/
 #
@@ -20,3 +18,8 @@ exercises = []
 # name = "example"
 # dir = "section"
 # hint = "A helpful hint."
+
+[[exercises]]
+name = "intro1"
+dir = "00_intro"
+hint = "Uncomment the line below the TODO-comment."
