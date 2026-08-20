@@ -11,8 +11,6 @@ final_message = """
 You finished Ratlings! 🎉
 """
 
-exercises = []
-
 # Add exercise metadata here. See CONTRIBUTING.md and the Rustlings community
 # exercises guide: https://rustlings.rust-lang.org/community-exercises/
 #
@@ -20,3 +18,13 @@ exercises = []
 # name = "example"
 # dir = "section"
 # hint = "A helpful hint."
+
+[[exercises]]
+name = "pack1"
+dir = "01_packing"
+# WRITE ME — placeholder hint. `rustlings dev check` rejects an empty hint, so
+# this stub exists only to keep the check passing. It should nudge toward the
+# idea (one item has to absorb the leftover rows) without naming the variant.
+hint = """
+WRITE ME
+"""

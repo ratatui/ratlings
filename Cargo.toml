@@ -1,6 +1,9 @@
 # Don't edit the `bin` list manually. Run `rustlings dev update` after changing
 # exercises or solutions.
-bin = []
+bin = [
+  { name = "pack1", path = "exercises/01_packing/pack1.rs" },
+  { name = "pack1_sol", path = "solutions/01_packing/pack1.rs" },
+]
 
 [package]
 name = "ratlings"
