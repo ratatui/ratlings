@@ -39,7 +39,7 @@ fn compartments(pack: Rect) -> [Rect; 4] {
     Layout::vertical(constraints).areas(pack)
 }
 
-fn render(frame: &mut Frame) {
+pub fn render(frame: &mut Frame) {
     let pack = Block::bordered().title(" pack ");
     let interior = pack.inner(frame.area());
     frame.render_widget(pack, frame.area());

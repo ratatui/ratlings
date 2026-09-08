@@ -17,7 +17,7 @@
 use ratatui::{DefaultTerminal, Frame, widgets::Block};
 use std::io::IsTerminal;
 
-fn render(frame: &mut Frame) {
+pub fn render(frame: &mut Frame) {
     frame.render_widget(Block::bordered().title(" pack "), frame.area());
 }
 
