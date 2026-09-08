@@ -3,6 +3,8 @@
 bin = [
   { name = "pack1", path = "exercises/01_packing/pack1.rs" },
   { name = "pack1_sol", path = "solutions/01_packing/pack1.rs" },
+  { name = "pack2", path = "exercises/01_packing/pack2.rs" },
+  { name = "pack2_sol", path = "solutions/01_packing/pack2.rs" },
 ]
 
 [package]

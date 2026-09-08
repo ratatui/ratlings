@@ -22,9 +22,31 @@ You finished Ratlings! 🎉
 [[exercises]]
 name = "pack1"
 dir = "01_packing"
-# WRITE ME — placeholder hint. `rustlings dev check` rejects an empty hint, so
-# this stub exists only to keep the check passing. It should nudge toward the
-# idea (one item has to absorb the leftover rows) without naming the variant.
 hint = """
-WRITE ME
+`Block::new()` gives you a block with no borders and no title, which draws
+nothing — that is why the screen is empty.
+
+`Block` has a constructor that starts you off with borders on all four sides,
+and a builder method for putting a title in the top border. You need both, and
+the title should read exactly " pack ", spaces included.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Block.html
+"""
+
+[[exercises]]
+name = "pack2"
+dir = "01_packing"
+hint = """
+Four compartments, four constraints, in the same order as `GEAR`.
+
+Three of these items take up the same room no matter how big the pack is, so a
+fixed length is exactly right for them. The fourth should end up with whatever
+the other three leave behind — and it has to still be right after the pack is
+resized.
+
+Read through the variants of `Constraint` and look for one that means "take
+what is left" rather than "take exactly this much". More than one of them will
+work here.
+
+https://docs.rs/ratatui/latest/ratatui/layout/enum.Constraint.html
 """

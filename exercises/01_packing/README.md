@@ -15,15 +15,19 @@
   LENGTH: ~1-2 short paragraphs.
 -->
 
-<!-- WRITE ME
-  SLOT:   What you'll learn.
-  GOAL:   Two or three bullets, in your voice, naming the ideas rather than
-          the API: fixed space vs. leftover space, ordering top to bottom,
-          and that a layout has to survive the terminal being resized.
--->
+## What you'll learn
+
+- The difference between space you **reserve** and space you let something
+  **claim** — and why a layout needs both.
+- That constraints are read in the order things appear on screen, top to
+  bottom, not the order you'd physically pack them.
+- That a layout is not a one-off measurement. It gets recomputed every time
+  the terminal is resized, so "whatever is left over" has to be expressed as
+  a rule rather than a number.
 
 ## Exercises
 
 | Exercise | What it covers |
 | --- | --- |
-| `pack1` | <!-- WRITE ME: one line, what packing the pack teaches --> |
+| `pack1` | Drawing your first widget: `render_widget`, and a `Block` with borders and a title. |
+| `pack2` | Splitting a fixed area into compartments with `Layout` and `Constraint`. |
