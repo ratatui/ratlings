@@ -20,7 +20,18 @@ You finished Ratlings! 🎉
 # hint = "A helpful hint."
 
 [[exercises]]
-name = "pack1"
+name = "lesson0"
+dir = "00_intro"
+hint = """
+Look for `const NAME` near the top of the file. It is set to "???" — change
+that to your own name, keep the quotes, and save.
+
+Then press `?` in the viewer. Ratlings runs `cargo test` for this lesson and
+shows you the result.
+"""
+
+[[exercises]]
+name = "lesson1"
 dir = "01_packing"
 hint = """
 `Block::new()` gives you a block with no borders and no title, which draws
@@ -34,7 +45,7 @@ https://docs.rs/ratatui/latest/ratatui/widgets/struct.Block.html
 """
 
 [[exercises]]
-name = "pack2"
+name = "lesson2"
 dir = "01_packing"
 hint = """
 Four compartments, four constraints, in the same order as `GEAR`.

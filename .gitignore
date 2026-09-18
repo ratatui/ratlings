@@ -3,3 +3,7 @@ target/
 .rustlings-state.txt
 .vscode/*
 !.vscode/extensions.json
+
+# local dev helpers
+bin/
+.ratlings-progress

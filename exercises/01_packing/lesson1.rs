@@ -1,4 +1,4 @@
-// Ratatui and his fellow chef friends are going going on an adventure!
+// Ratatui and his fellow chef friends are going on an adventure!
 //
 // After years of working away, spending long hours in the kitchen, and late nights
 // coming up with the perfect recipes, they've earned some much needed rest and
@@ -7,7 +7,9 @@
 //
 // Only... there's one problem. Ratatui has never gone camping before. It's
 // time to pack, but he has no idea what he needs to bring, or how to organize
-// his bag!
+// his bag! Wait a second—he doesn't even have a bag! Can you help him find one?
+//
+// ──────────────────────────────────────────────────────────────────
 //
 // Everything you see in a Ratatui app is a widget drawn into an area of the
 // frame. `render_widget` is the call that puts one there, and `frame.area()`
@@ -18,6 +20,11 @@ use ratatui::{DefaultTerminal, Frame, widgets::Block};
 use std::io::IsTerminal;
 
 pub fn render(frame: &mut Frame) {
+    // TODO: Ratatui is rendering a block, but a plain `Block::new()` draws
+    // nothing at all — run it and you get an empty screen. Give him a bag he
+    // can actually see: a block with borders, titled " pack ".
+    //
+    // Docs: https://docs.rs/ratatui/latest/ratatui/widgets/struct.Block.html
     frame.render_widget(Block::bordered().title(" pack "), frame.area());
 }
 

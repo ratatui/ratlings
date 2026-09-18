@@ -29,5 +29,5 @@
 
 | Exercise | What it covers |
 | --- | --- |
-| `pack1` | Drawing your first widget: `render_widget`, and a `Block` with borders and a title. |
-| `pack2` | Splitting a fixed area into compartments with `Layout` and `Constraint`. |
+| `lesson1` | Drawing your first widget: `render_widget`, and a `Block` with borders and a title. |
+| `lesson2` | Splitting a fixed area into compartments with `Layout` and `Constraint`. |

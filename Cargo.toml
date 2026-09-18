@@ -1,10 +1,12 @@
 # Don't edit the `bin` list manually. Run `rustlings dev update` after changing
 # exercises or solutions.
 bin = [
-  { name = "pack1", path = "exercises/01_packing/pack1.rs" },
-  { name = "pack1_sol", path = "solutions/01_packing/pack1.rs" },
-  { name = "pack2", path = "exercises/01_packing/pack2.rs" },
-  { name = "pack2_sol", path = "solutions/01_packing/pack2.rs" },
+  { name = "lesson0", path = "exercises/00_intro/lesson0.rs" },
+  { name = "lesson0_sol", path = "solutions/00_intro/lesson0.rs" },
+  { name = "lesson1", path = "exercises/01_packing/lesson1.rs" },
+  { name = "lesson1_sol", path = "solutions/01_packing/lesson1.rs" },
+  { name = "lesson2", path = "exercises/01_packing/lesson2.rs" },
+  { name = "lesson2_sol", path = "solutions/01_packing/lesson2.rs" },
 ]
 
 [package]

@@ -1,11 +1,11 @@
-// ─── WRITE ME ─────────────────────────────────────────────────────────────
-// SLOT:   Bridging story beat for pack2.
-// GOAL:   One or two lines carrying Ratatui from "he has a bag" to "now he has
-//         to decide what goes where in it". The section opener already did the
-//         scene-setting on pack1, so this only needs to move him along.
-// LENGTH: ~1-2 lines.
-// ──────────────────────────────────────────────────────────────────────────
-
+// Alright, what else does Ratatui need to survive in the woods? Actually, let
+// me rephrase that. We're going to go beyond survival. We're camping _with style_.
+//
+// After discussing with his chef friends, Ratatui has learned that there are
+// some essentials he's going to need to fit into his bag.
+//
+// ──────────────────────────────────────────────────────────────────
+//
 // Packing is a layout problem. The pack is a fixed height and most of the gear
 // is not negotiable: the rain shell, the stove and the sleeping bag each need
 // the same room whatever pack they go in. The food bag is the one that flexes,
@@ -29,6 +29,7 @@ fn compartments(pack: Rect) -> [Rect; 4] {
     // compartment is nailed to 3 rows, the food bag has nowhere to grow, and
     // the bottom of the pack is dead air. Give each item of `GEAR` the
     // constraint it actually needs, in the same order.
+    //
     // Docs: https://docs.rs/ratatui/latest/ratatui/layout/enum.Constraint.html
     let constraints: [Constraint; 4] = [
         Constraint::Length(3),
