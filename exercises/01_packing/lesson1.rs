@@ -25,7 +25,7 @@ pub fn render(frame: &mut Frame) {
     // can actually see: a block with borders, titled " pack ".
     //
     // Docs: https://docs.rs/ratatui/latest/ratatui/widgets/struct.Block.html
-    frame.render_widget(Block::bordered().title(" pack "), frame.area());
+    frame.render_widget(Block::new(), frame.area());
 }
 
 fn app(terminal: &mut DefaultTerminal) -> std::io::Result<()> {

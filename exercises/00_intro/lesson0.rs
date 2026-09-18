@@ -27,7 +27,7 @@ use std::io::IsTerminal;
 // TODO: The sign is addressed to nobody. Put your name here, then press `?`
 // to run the tests and see them go green. That edit-and-check loop is the
 // whole course; everything after this is just more Ratatui.
-const NAME: &str = "Nick";
+const NAME: &str = "???";
 
 pub fn render(frame: &mut Frame) {
     let [area] = Layout::horizontal([Constraint::Length(40)])
