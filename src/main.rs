@@ -34,7 +34,7 @@ use ratatui::{
 struct Exercise {
     /// The `[[bin]]` name, e.g. `lesson1`. Also the name `cargo test` needs.
     name: &'static str,
-    /// What the lesson is called on screen, e.g. `A Bag You Can See`.
+    /// What the lesson is called on screen
     title: &'static str,
     /// Path from `src/`, e.g. `../exercises/01_packing/lesson1.rs`.
     path: &'static str,
@@ -45,7 +45,7 @@ struct Exercise {
 }
 
 impl Exercise {
-    /// Lesson 0 is a tour of the viewer itself, so it gets a live checklist.
+    /// Lesson 0 includes a tour of the viewer itself, so it gets a live checklist.
     fn is_tour(&self) -> bool {
         self.path.contains("/00_intro/")
     }
@@ -95,7 +95,7 @@ exercises! {
     lesson2 => "Room for Everything", "../exercises/01_packing/lesson2.rs",
 }
 
-/// `lesson1` is a fine binary name and a poor title. Show it as `Lesson 1`.
+/// Map lesson names like `lesson1` to `Lesson 1`.
 fn display_name(name: &str) -> String {
     let split = name.trim_end_matches(|c: char| c.is_ascii_digit()).len();
     let (word, number) = name.split_at(split);
@@ -112,13 +112,11 @@ fn display_name(name: &str) -> String {
     out
 }
 
-/// Hints live in `info.toml`, exactly where `rustlings` reads them from.
+/// Hints live in `info.toml`, where `rustlings` reads them from.
 const INFO: &str = include_str!("../info.toml");
 
 // ──────────────────────────────── the lesson ───────────────────────────────
 
-/// The words around an exercise: the story at the top of the file, the TODO
-/// inside `render`, and the hint from `info.toml`.
 struct Lesson {
     instructions: String,
     hint: String,
@@ -133,6 +131,7 @@ impl Lesson {
     }
 }
 
+/// There is some magic/unexpectedness that happens here.
 /// The leading `//` block of the file, then the first `// TODO` block. Blank
 /// comment lines become paragraph breaks.
 fn instructions(source: &str) -> String {
@@ -164,7 +163,6 @@ fn instructions(source: &str) -> String {
 }
 
 /// Join hard-wrapped comment lines so `Paragraph` can re-wrap to the panel.
-/// Indented lines are preformatted (a key table, say) and keep their row.
 fn unwrap_paragraphs(lines: &[String]) -> String {
     let mut out = String::new();
     let mut prev_pre = false;
@@ -183,8 +181,6 @@ fn unwrap_paragraphs(lines: &[String]) -> String {
     out
 }
 
-/// Pull `hint = """…"""` for `name` out of `info.toml`. The file is ours and
-/// its shape is fixed, so a scan is enough — no TOML crate needed.
 fn hint(name: &str) -> Option<String> {
     let start = INFO.find(&format!("name = \"{name}\""))?;
     let after = &INFO[start..];
@@ -278,7 +274,6 @@ enum Build {
     #[default]
     Idle,
     Running,
-    /// `cargo build` failed — usually the student's code doesn't compile yet.
     Failed(String),
 }
 
@@ -321,8 +316,9 @@ const RESUME: &str = "RATLINGS_RESUME";
 
 // ──────────────────────────────── progress ─────────────────────────────────
 
-/// Which lessons have passed, one name per line in a gitignored file at the
-/// repo root. Written the moment a lesson's tests go green.
+/// Which lessons have passed, written to disk when a lesson's tests go green.
+/// Ensures that a user doesn't open up to Lesson 0 against after closing and 
+/// reopnening with `ratlings view`.
 struct Progress {
     done: BTreeSet<String>,
 }
@@ -359,7 +355,6 @@ impl Progress {
                 out.push_str(n);
                 out.push('\n');
             }
-            // Best effort: losing progress is a nuisance, not an error.
             let _ = std::fs::write(Self::file(), out);
         }
     }
@@ -378,7 +373,7 @@ impl Progress {
 /// What the student has tried so far. Lesson 0 shows this as a checklist
 /// that ticks off live; every other lesson ignores it.
 #[derive(Default)]
-#[allow(clippy::struct_excessive_bools)] // it *is* a checklist
+#[allow(clippy::struct_excessive_bools)]
 struct Tour {
     closed_pane: bool,
     to_canvas: bool,
@@ -488,18 +483,17 @@ struct Viewer {
 }
 
 const AMBER: Color = Color::Rgb(240, 190, 110);
-/// Inline code and key names. Deliberately not the border's amber, so keys
-/// stand out from the chrome around them.
 const CODE: Color = Color::Rgb(130, 200, 220);
 
 impl Viewer {
-    /// Open on `index` with the instructions showing — never on a possibly
-    /// empty canvas.
     fn open(index: usize) -> Self {
         let ex = &EXERCISES[index];
-        // Check quietly on the way in. If the student solved this lesson while
-        // the viewer was closed, the pass arrives in a moment and gets its
-        // celebration; otherwise nothing visible happens.
+        // This is covering a sort of edge case. We want to give the user
+        // some dopamine if they solved the lesson while `ratlings view` was
+        // _not_ open, and then the re-opened `ratligns view`.
+        // If the student solved this lesson while the viewer was closed,
+        // the pass arrives in a moment and gets its celebration; otherwise nothing
+        // would visible happen.
         let rx = (!cfg!(test)).then(|| spawn_tests(ex.name));
         Self {
             index,
@@ -535,8 +529,6 @@ impl Viewer {
             "f" => Panel::Feedback,
             _ => Panel::None,
         };
-        // `open` already kicked off a test run, which is exactly what the
-        // student wants after a save: to see where they stand.
         let mut v = Self::open(index);
         v.tour = tour;
         v.panel = panel;
@@ -570,7 +562,6 @@ impl Viewer {
                 Ok(()) => self.restart = true,
                 Err(e) => {
                     self.build = Build::Failed(e);
-                    // Surface the compile error where the tests would go.
                     self.focus = Focus::Ratlings;
                     self.panel = Panel::Feedback;
                 }
@@ -590,7 +581,6 @@ impl Viewer {
         self.index + 1 < EXERCISES.len()
     }
 
-    /// Exactly one reserved chord. Every other key belongs to the exercise.
     fn is_prefix(key: KeyEvent) -> bool {
         key.code == KeyCode::Char('g') && key.modifiers.contains(KeyModifiers::CONTROL)
     }
@@ -653,7 +643,7 @@ impl Viewer {
 
     fn draw(&self, frame: &mut Frame) {
         // The canvas is the entire terminal, so the exercise's constraints
-        // resolve against the real size. Chrome floats; it never reflows.
+        // resolve against the real size
         canvas(frame, frame.area(), self.exercise().render);
 
         if self.focus == Focus::Ratlings {
@@ -664,8 +654,7 @@ impl Viewer {
     fn draw_chrome(&self, frame: &mut Frame) {
         let area = frame.area();
 
-        // Style only the border and title — a `.fg()` on the block itself
-        // would repaint every cell of the exercise underneath.
+        // Style only the border and title
         frame.render_widget(
             Block::bordered()
                 .title(format!(
@@ -726,7 +715,7 @@ impl Viewer {
         }
     }
 
-    /// A centred reading pane for prose: instructions or a hint.
+    /// A centered reading pane for prose (instructions or a hint)
     fn draw_reading(&self, frame: &mut Frame, title: &str, text: &str) {
         let area = frame.area();
         let outer = area.inner(Margin::new(2, 2));
@@ -737,8 +726,6 @@ impl Viewer {
         // Size to the wrapped text, plus border and padding, capped to the screen.
         let inner_w = width.saturating_sub(2 + 4) as usize;
         let paragraph = Paragraph::new(markup(text)).wrap(Wrap { trim: false });
-        // A line of `─` in the source is a rule between story and code; draw
-        // it exactly as wide as the pane whatever length the author typed.
         let rule = "─".repeat(inner_w);
         let text: String = text
             .lines()
@@ -850,8 +837,7 @@ impl Viewer {
     }
 }
 
-/// The two bits of inline markup lesson prose uses: `_italics_` and
-/// `` `code` ``. Anything else is plain text.
+/// Right now just implementing `_italics_` and `` `code` ``. Anything else is plain text.
 fn markup(text: &str) -> Text<'static> {
     text.lines().map(markup_line).collect::<Vec<_>>().into()
 }
@@ -862,8 +848,6 @@ fn markup_line(line: &str) -> Line<'static> {
     let mut rest = line;
     while let Some(i) = rest.find(['_', '`']) {
         let marker = rest.as_bytes()[i] as char;
-        // A marker only opens a run if there is a matching close later on
-        // and it isn't buried inside a word like `render_widget`.
         let opens = i == 0 || !rest.as_bytes()[i - 1].is_ascii_alphanumeric();
         let close = rest[i + 1..].find(marker).map(|j| i + 1 + j);
         match (opens, close) {
@@ -892,7 +876,7 @@ fn markup_line(line: &str) -> Line<'static> {
     Line::from(spans)
 }
 
-/// Three or more `─` and nothing else.
+/// Three or more `─`
 fn is_rule(line: &str) -> bool {
     let t = line.trim();
     t.chars().count() >= 3 && t.chars().all(|c| c == '─')
@@ -928,8 +912,7 @@ fn wrapped_lines(text: &str, width: usize) -> usize {
         .sum()
 }
 
-/// Draw a render fn into an off-screen buffer, then copy the cells into
-/// `area`. Full style fidelity — it's a cell copy, not a re-serialisation.
+/// Draw a render fn into an off-screen buffer, then copy the cells into `area`
 fn canvas(frame: &mut Frame, area: Rect, render: fn(&mut Frame)) {
     // Infallible: `TestBackend` has nothing to fail at.
     let mut inner = Terminal::new(TestBackend::new(area.width, area.height))
@@ -962,7 +945,7 @@ fn run(terminal: &mut DefaultTerminal, mut viewer: Viewer) -> std::io::Result<Op
                 viewer.tour.passed = true;
                 let name = viewer.exercise().name;
                 if !viewer.progress.is_done(name) {
-                    // First time green: make sure they see it.
+                    // First time green: make sure they get to see it
                     viewer.progress.mark_done(name);
                     viewer.focus = Focus::Ratlings;
                     viewer.panel = Panel::Feedback;
