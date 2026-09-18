@@ -43,6 +43,12 @@ pub fn render(frame: &mut Frame) {
     frame.render_widget(sign, area);
 }
 
+// Hi Ratatui student!
+// Everything below this is just scaffolding.
+// It opens the terminal, draws `render` until a key is pressed,
+// and checks your work. It is the same in every lesson and you never
+// need to edit it. Your work is above this line.
+
 fn app(terminal: &mut DefaultTerminal) -> std::io::Result<()> {
     loop {
         terminal.draw(render)?;
