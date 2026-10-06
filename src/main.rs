@@ -317,7 +317,7 @@ const RESUME: &str = "RATLINGS_RESUME";
 // ──────────────────────────────── progress ─────────────────────────────────
 
 /// Which lessons have passed, written to disk when a lesson's tests go green.
-/// Ensures that a user doesn't open up to Lesson 0 against after closing and 
+/// Ensures that a user doesn't open up to Lesson 0 against after closing and
 /// reopnening with `ratlings view`.
 struct Progress {
     done: BTreeSet<String>,
@@ -719,13 +719,13 @@ impl Viewer {
     fn draw_reading(&self, frame: &mut Frame, title: &str, text: &str) {
         let area = frame.area();
         let outer = area.inner(Margin::new(2, 2));
-        let width = outer.width.min(72);
+        let width = outer.width.min(96);
         let [a] = Layout::horizontal([Constraint::Length(width)])
             .flex(Flex::Center)
             .areas(outer);
         // Size to the wrapped text, plus border and padding, capped to the screen.
         let inner_w = width.saturating_sub(2 + 4) as usize;
-        let paragraph = Paragraph::new(markup(text)).wrap(Wrap { trim: false });
+        // Rules in the source are a fixed width; stretch them to the pane.
         let rule = "─".repeat(inner_w);
         let text: String = text
             .lines()
@@ -733,6 +733,7 @@ impl Viewer {
             .collect::<Vec<_>>()
             .join("\n");
         let text = text.as_str();
+        let paragraph = Paragraph::new(markup(text)).wrap(Wrap { trim: false });
         // Estimate on what will actually be drawn: markup markers take no room.
         let plain: String = markup(text)
             .lines
