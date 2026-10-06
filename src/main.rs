@@ -94,6 +94,10 @@ exercises! {
     lesson1 => "A Bag You Can See", "../exercises/01_packing/lesson1.rs",
     lesson2 => "Room for Everything", "../exercises/01_packing/lesson2.rs",
     lesson3 => "Weighing In", "../exercises/01_packing/lesson3.rs",
+    lesson4 => "Pick a Weekend", "../exercises/02_planning/lesson4.rs",
+    lesson5 => "The Map", "../exercises/02_planning/lesson5.rs",
+    lesson6 => "The Climb", "../exercises/02_planning/lesson6.rs",
+    lesson7 => "The Matches", "../exercises/02_planning/lesson7.rs",
 }
 
 /// Map lesson names like `lesson1` to `Lesson 1`.

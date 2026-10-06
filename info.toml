@@ -74,3 +74,61 @@ hint = """
 
 https://docs.rs/ratatui/latest/ratatui/widgets/struct.Bar.html
 """
+
+[[exercises]]
+name = "lesson4"
+dir = "02_planning"
+hint = """
+`CalendarEventStore` starts empty. It has an `add` method that takes a `Date`
+and anything that converts into a `Style`.
+
+Make the store mutable, loop over `TRIP`, and for each day call `add` with
+`october(day)` and `Style::new().reversed()`. Then return the store.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/calendar/struct.CalendarEventStore.html
+"""
+
+[[exercises]]
+name = "lesson5"
+dir = "02_planning"
+hint = """
+Two imports first: `ratatui::widgets::canvas::Line` and `ratatui::style::Color`.
+
+`ROUTE.windows(2)` yields overlapping pairs of waypoints. For each pair,
+destructure the two `(x, y)` tuples and call
+`ctx.draw(&Line::new(x1, y1, x2, y2, Color::Green))`.
+
+The map is drawn with braille, so the line will look a little dotted. That is
+expected.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/canvas/struct.Line.html
+"""
+
+[[exercises]]
+name = "lesson6"
+dir = "02_planning"
+hint = """
+Import `Axis` from `ratatui::widgets`. Build two of them with
+`Axis::default()`, each with a `title`, `bounds` and `labels`, and attach them
+with `chart.x_axis(...)` and `.y_axis(...)`.
+
+`bounds` is an array of two `f64`s. `labels` takes anything you can iterate
+into lines, so an array of `&str` works. The exact titles and labels the test
+expects are spelled out in the TODO.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Axis.html
+"""
+
+[[exercises]]
+name = "lesson7"
+dir = "02_planning"
+hint = """
+`Clear` is a unit struct, so it is rendered as just `Clear`:
+
+    frame.render_widget(Clear, area);
+
+Put that line before the paragraph is rendered, and import `Clear` from
+`ratatui::widgets`. Order matters here: whatever renders last wins.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Clear.html
+"""

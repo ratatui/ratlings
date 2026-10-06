@@ -9,6 +9,14 @@ bin = [
   { name = "lesson2_sol", path = "solutions/01_packing/lesson2.rs" },
   { name = "lesson3", path = "exercises/01_packing/lesson3.rs" },
   { name = "lesson3_sol", path = "solutions/01_packing/lesson3.rs" },
+  { name = "lesson4", path = "exercises/02_planning/lesson4.rs" },
+  { name = "lesson4_sol", path = "solutions/02_planning/lesson4.rs" },
+  { name = "lesson5", path = "exercises/02_planning/lesson5.rs" },
+  { name = "lesson5_sol", path = "solutions/02_planning/lesson5.rs" },
+  { name = "lesson6", path = "exercises/02_planning/lesson6.rs" },
+  { name = "lesson6_sol", path = "solutions/02_planning/lesson6.rs" },
+  { name = "lesson7", path = "exercises/02_planning/lesson7.rs" },
+  { name = "lesson7_sol", path = "solutions/02_planning/lesson7.rs" },
 ]
 
 [package]
@@ -21,6 +29,7 @@ publish = false
 
 [dependencies]
 ratatui = "0.30.2"
+time = "0.3"
 
 [lints.rust]
 unsafe_code = "forbid"
