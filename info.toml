@@ -61,3 +61,16 @@ work here.
 
 https://docs.rs/ratatui/latest/ratatui/layout/enum.Constraint.html
 """
+
+[[exercises]]
+name = "lesson3"
+dir = "01_packing"
+hint = """
+`bars()` has to return one `Bar` for each of the four entries in `GEAR`.
+
+`Bar::with_label(label, value)` builds a bar with both in one go. Iterate over
+`GEAR`, map each `(name, ounces)` pair through it, and `collect()` into a
+`Vec`. The chart already knows how wide to draw them.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Bar.html
+"""

@@ -24,6 +24,8 @@
 - That a layout is not a one-off measurement. It gets recomputed every time
   the terminal is resized, so "whatever is left over" has to be expressed as
   a rule rather than a number.
+- That the simplest charts are just lists of numbers: a `BarChart` is a
+  `Vec<Bar>` and a few sizing choices.
 
 ## Exercises
 
@@ -31,3 +33,4 @@
 | --- | --- |
 | `lesson1` | Drawing your first widget: `render_widget`, and a `Block` with borders and a title. |
 | `lesson2` | Splitting a fixed area into compartments with `Layout` and `Constraint`. |
+| `lesson3` | Weighing the gear with a `BarChart` built from `Bar`s. |

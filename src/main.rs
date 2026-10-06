@@ -93,6 +93,7 @@ exercises! {
     lesson0 => "Welcome to Ratlings", "../exercises/00_intro/lesson0.rs",
     lesson1 => "A Bag You Can See", "../exercises/01_packing/lesson1.rs",
     lesson2 => "Room for Everything", "../exercises/01_packing/lesson2.rs",
+    lesson3 => "Weighing In", "../exercises/01_packing/lesson3.rs",
 }
 
 /// Map lesson names like `lesson1` to `Lesson 1`.
