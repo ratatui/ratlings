@@ -17,6 +17,22 @@ bin = [
   { name = "lesson6_sol", path = "solutions/02_planning/lesson6.rs" },
   { name = "lesson7", path = "exercises/02_planning/lesson7.rs" },
   { name = "lesson7_sol", path = "solutions/02_planning/lesson7.rs" },
+  { name = "lesson8", path = "exercises/03_the_trail/lesson8.rs" },
+  { name = "lesson8_sol", path = "solutions/03_the_trail/lesson8.rs" },
+  { name = "lesson9", path = "exercises/03_the_trail/lesson9.rs" },
+  { name = "lesson9_sol", path = "solutions/03_the_trail/lesson9.rs" },
+  { name = "lesson10", path = "exercises/03_the_trail/lesson10.rs" },
+  { name = "lesson10_sol", path = "solutions/03_the_trail/lesson10.rs" },
+  { name = "lesson11", path = "exercises/03_the_trail/lesson11.rs" },
+  { name = "lesson11_sol", path = "solutions/03_the_trail/lesson11.rs" },
+  { name = "lesson12", path = "exercises/03_the_trail/lesson12.rs" },
+  { name = "lesson12_sol", path = "solutions/03_the_trail/lesson12.rs" },
+  { name = "lesson13", path = "exercises/04_camp/lesson13.rs" },
+  { name = "lesson13_sol", path = "solutions/04_camp/lesson13.rs" },
+  { name = "lesson14", path = "exercises/04_camp/lesson14.rs" },
+  { name = "lesson14_sol", path = "solutions/04_camp/lesson14.rs" },
+  { name = "lesson15", path = "exercises/04_camp/lesson15.rs" },
+  { name = "lesson15_sol", path = "solutions/04_camp/lesson15.rs" },
 ]
 
 [package]

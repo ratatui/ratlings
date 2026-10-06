@@ -132,3 +132,105 @@ Put that line before the paragraph is rendered, and import `Clear` from
 
 https://docs.rs/ratatui/latest/ratatui/widgets/struct.Clear.html
 """
+
+[[exercises]]
+name = "lesson8"
+dir = "03_the_trail"
+hint = """
+`ratio` wants an `f64` between 0.0 and 1.0. The constants are `u16`, so
+convert them first; `f64::from(WATER_ML) / f64::from(BOTTLE_ML)` does it
+without any lossy casts.
+
+`label` accepts anything that turns into a `Span`, including a `String`, so
+`format!("{WATER_ML} ml")` is all it needs.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Gauge.html
+"""
+
+[[exercises]]
+name = "lesson9"
+dir = "03_the_trail"
+hint = """
+Keep the two symbol calls that are already there and chain `ratio` and
+`label` after them.
+
+The miles are already `f64`, so `HIKED_MILES / TRAIL_MILES` is the ratio.
+For the label, `format!("{HIKED_MILES} of {TRAIL_MILES} mi")` prints the
+floats as `5` and `8`, which is what the test expects.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.LineGauge.html
+"""
+
+[[exercises]]
+name = "lesson10"
+dir = "03_the_trail"
+hint = """
+Import `ListState` alongside `List`. `ListState::default()` has nothing
+selected; `with_selected(Some(CHECKING))` picks the sleeping bag.
+
+`render_stateful_widget` takes the widget, the area, and `&mut state`, so the
+state has to be a `mut` binding.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.ListState.html
+"""
+
+[[exercises]]
+name = "lesson11"
+dir = "03_the_trail"
+hint = """
+Import `Wrap` from `ratatui::widgets`. It is a plain struct with one field:
+`Wrap { trim: true }` means leading spaces on wrapped lines are dropped.
+
+Chain `.wrap(...)` and `.centered()` onto the paragraph and return it.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Paragraph.html
+"""
+
+[[exercises]]
+name = "lesson12"
+dir = "03_the_trail"
+hint = """
+`ScrollbarState::new(content_length)` takes the total number of rows, and
+`.position(n)` says which one is at the top of the viewport.
+
+`GUIDEBOOK.lines().count()` is the length. `SCROLLED` is a `u16`, so convert
+it to `usize` for the position.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.ScrollbarState.html
+"""
+
+[[exercises]]
+name = "lesson13"
+dir = "04_camp"
+hint = """
+Two builder calls: `.data(EMBERS)` and `.max(9)`.
+
+`data` accepts anything you can iterate into bars, and an array of `u64`
+qualifies.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Sparkline.html
+"""
+
+[[exercises]]
+name = "lesson14"
+dir = "04_camp"
+hint = """
+Widths are `Constraint`s, one per column: `Length(3)`, `Length(9)` and
+`Fill(1)` in that order.
+
+The header is `Row::new(["day", "lunch", "dinner"])`. Calling `.bold()` on a
+`Row` needs the `Stylize` trait in scope, so add `style::Stylize` to the
+`ratatui` import. Attach it with `.header(...)`.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Table.html
+"""
+
+[[exercises]]
+name = "lesson15"
+dir = "04_camp"
+hint = """
+`Tabs::new(DAYS).select(TODAY)` is the whole change. `select` takes anything
+that converts into an `Option<usize>`, so a plain `usize` works.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Tabs.html
+"""

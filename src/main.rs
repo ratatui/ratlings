@@ -98,6 +98,14 @@ exercises! {
     lesson5 => "The Map", "../exercises/02_planning/lesson5.rs",
     lesson6 => "The Climb", "../exercises/02_planning/lesson6.rs",
     lesson7 => "The Matches", "../exercises/02_planning/lesson7.rs",
+    lesson8 => "The Bottle", "../exercises/03_the_trail/lesson8.rs",
+    lesson9 => "How Much Further", "../exercises/03_the_trail/lesson9.rs",
+    lesson10 => "Rest Stop", "../exercises/03_the_trail/lesson10.rs",
+    lesson11 => "The Trail Sign", "../exercises/03_the_trail/lesson11.rs",
+    lesson12 => "The Guidebook", "../exercises/03_the_trail/lesson12.rs",
+    lesson13 => "Embers", "../exercises/04_camp/lesson13.rs",
+    lesson14 => "The Menu", "../exercises/04_camp/lesson14.rs",
+    lesson15 => "Three Days", "../exercises/04_camp/lesson15.rs",
 }
 
 /// Map lesson names like `lesson1` to `Lesson 1`.
