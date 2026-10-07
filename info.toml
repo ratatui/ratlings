@@ -11,8 +11,6 @@ final_message = """
 You finished Ratlings! 🎉
 """
 
-exercises = []
-
 # Add exercise metadata here. See CONTRIBUTING.md and the Rustlings community
 # exercises guide: https://rustlings.rust-lang.org/community-exercises/
 #
@@ -20,3 +18,219 @@ exercises = []
 # name = "example"
 # dir = "section"
 # hint = "A helpful hint."
+
+[[exercises]]
+name = "lesson0"
+dir = "00_intro"
+hint = """
+Look for `const NAME` near the top of the file. It is set to "???" — change
+that to your own name, keep the quotes, and save.
+
+Then press `?` in the viewer. Ratlings runs `cargo test` for this lesson and
+shows you the result.
+"""
+
+[[exercises]]
+name = "lesson1"
+dir = "01_packing"
+hint = """
+`Block::new()` gives you a block with no borders and no title, which draws
+nothing — that is why the screen is empty.
+
+`Block` has a constructor that starts you off with borders on all four sides,
+and a builder method for putting a title in the top border. You need both, and
+the title should read exactly " pack ", spaces included.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Block.html
+"""
+
+[[exercises]]
+name = "lesson2"
+dir = "01_packing"
+hint = """
+Four compartments, four constraints, in the same order as `GEAR`.
+
+Three of these items take up the same room no matter how big the pack is, so a
+fixed length is exactly right for them. The fourth should end up with whatever
+the other three leave behind — and it has to still be right after the pack is
+resized.
+
+Read through the variants of `Constraint` and look for one that means "take
+what is left" rather than "take exactly this much". More than one of them will
+work here.
+
+https://docs.rs/ratatui/latest/ratatui/layout/enum.Constraint.html
+"""
+
+[[exercises]]
+name = "lesson3"
+dir = "01_packing"
+hint = """
+`bars()` has to return one `Bar` for each of the four entries in `GEAR`.
+
+`Bar::with_label(label, value)` builds a bar with both in one go. Iterate over
+`GEAR`, map each `(name, ounces)` pair through it, and `collect()` into a
+`Vec`. The chart already knows how wide to draw them.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Bar.html
+"""
+
+[[exercises]]
+name = "lesson4"
+dir = "02_planning"
+hint = """
+`CalendarEventStore` starts empty. It has an `add` method that takes a `Date`
+and anything that converts into a `Style`.
+
+Make the store mutable, loop over `TRIP`, and for each day call `add` with
+`october(day)` and `Style::new().reversed()`. Then return the store.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/calendar/struct.CalendarEventStore.html
+"""
+
+[[exercises]]
+name = "lesson5"
+dir = "02_planning"
+hint = """
+Two imports first: `ratatui::widgets::canvas::Line` and `ratatui::style::Color`.
+
+`ROUTE.windows(2)` yields overlapping pairs of waypoints. For each pair,
+destructure the two `(x, y)` tuples and call
+`ctx.draw(&Line::new(x1, y1, x2, y2, Color::Green))`.
+
+The map is drawn with braille, so the line will look a little dotted. That is
+expected.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/canvas/struct.Line.html
+"""
+
+[[exercises]]
+name = "lesson6"
+dir = "02_planning"
+hint = """
+Import `Axis` from `ratatui::widgets`. Build two of them with
+`Axis::default()`, each with a `title`, `bounds` and `labels`, and attach them
+with `chart.x_axis(...)` and `.y_axis(...)`.
+
+`bounds` is an array of two `f64`s. `labels` takes anything you can iterate
+into lines, so an array of `&str` works. The exact titles and labels the test
+expects are spelled out in the TODO.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Axis.html
+"""
+
+[[exercises]]
+name = "lesson7"
+dir = "02_planning"
+hint = """
+`Clear` is a unit struct, so it is rendered as just `Clear`:
+
+    frame.render_widget(Clear, area);
+
+Put that line before the paragraph is rendered, and import `Clear` from
+`ratatui::widgets`. Order matters here: whatever renders last wins.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Clear.html
+"""
+
+[[exercises]]
+name = "lesson8"
+dir = "03_the_trail"
+hint = """
+`ratio` wants an `f64` between 0.0 and 1.0. The constants are `u16`, so
+convert them first; `f64::from(WATER_ML) / f64::from(BOTTLE_ML)` does it
+without any lossy casts.
+
+`label` accepts anything that turns into a `Span`, including a `String`, so
+`format!("{WATER_ML} ml")` is all it needs.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Gauge.html
+"""
+
+[[exercises]]
+name = "lesson9"
+dir = "03_the_trail"
+hint = """
+Keep the two symbol calls that are already there and chain `ratio` and
+`label` after them.
+
+The miles are already `f64`, so `HIKED_MILES / TRAIL_MILES` is the ratio.
+For the label, `format!("{HIKED_MILES} of {TRAIL_MILES} mi")` prints the
+floats as `5` and `8`, which is what the test expects.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.LineGauge.html
+"""
+
+[[exercises]]
+name = "lesson10"
+dir = "03_the_trail"
+hint = """
+Import `ListState` alongside `List`. `ListState::default()` has nothing
+selected; `with_selected(Some(CHECKING))` picks the sleeping bag.
+
+`render_stateful_widget` takes the widget, the area, and `&mut state`, so the
+state has to be a `mut` binding.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.ListState.html
+"""
+
+[[exercises]]
+name = "lesson11"
+dir = "03_the_trail"
+hint = """
+Import `Wrap` from `ratatui::widgets`. It is a plain struct with one field:
+`Wrap { trim: true }` means leading spaces on wrapped lines are dropped.
+
+Chain `.wrap(...)` and `.centered()` onto the paragraph and return it.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Paragraph.html
+"""
+
+[[exercises]]
+name = "lesson12"
+dir = "03_the_trail"
+hint = """
+`ScrollbarState::new(content_length)` takes the total number of rows, and
+`.position(n)` says which one is at the top of the viewport.
+
+`GUIDEBOOK.lines().count()` is the length. `SCROLLED` is a `u16`, so convert
+it to `usize` for the position.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.ScrollbarState.html
+"""
+
+[[exercises]]
+name = "lesson13"
+dir = "04_camp"
+hint = """
+Two builder calls: `.data(EMBERS)` and `.max(9)`.
+
+`data` accepts anything you can iterate into bars, and an array of `u64`
+qualifies.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Sparkline.html
+"""
+
+[[exercises]]
+name = "lesson14"
+dir = "04_camp"
+hint = """
+Widths are `Constraint`s, one per column: `Length(3)`, `Length(9)` and
+`Fill(1)` in that order.
+
+The header is `Row::new(["day", "lunch", "dinner"])`. Calling `.bold()` on a
+`Row` needs the `Stylize` trait in scope, so add `style::Stylize` to the
+`ratatui` import. Attach it with `.header(...)`.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Table.html
+"""
+
+[[exercises]]
+name = "lesson15"
+dir = "04_camp"
+hint = """
+`Tabs::new(DAYS).select(TODAY)` is the whole change. `select` takes anything
+that converts into an `Option<usize>`, so a plain `usize` works.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/struct.Tabs.html
+"""
