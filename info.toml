@@ -3,20 +3,92 @@ format_version = 1
 welcome_message = """
 Welcome to Ratlings! 🐀
 
-These small exercises teach Ratatui one concept at a time. Run `rustlings`
-and follow the compiler feedback. Use `h` for a hint when you get stuck.
+These small exercises teach Ratatui one concept at a time:
+
+  1. styling         color and emphasize text with `Style`, `Span` and `Line`
+  2. layout          nest layouts to split the screen into areas
+  3. custom widgets  build your own widgets by implementing `Widget`
+
+Run `rustlings` and follow the compiler feedback. Use `h` for a hint when you
+get stuck.
 """
 
 final_message = """
 You finished Ratlings! 🎉
+
+You styled text, laid out a screen and built your own widgets. Ready for a
+full app? Check out the tutorials and templates at https://ratatui.rs
 """
 
-exercises = []
+# styling
 
-# Add exercise metadata here. See CONTRIBUTING.md and the Rustlings community
-# exercises guide: https://rustlings.rust-lang.org/community-exercises/
-#
-# [[exercises]]
-# name = "example"
-# dir = "section"
-# hint = "A helpful hint."
+[[exercises]]
+name = "style"
+dir = "01_styling"
+hint = """
+Start every style with `Style::new()` and chain:
+- `.fg(Color::...)` for the text color
+- `.bg(Color::...)` for the background color
+- `.add_modifier(Modifier::BOLD)` for bold text
+
+https://docs.rs/ratatui/latest/ratatui/style/struct.Style.html
+"""
+
+[[exercises]]
+name = "styled_text"
+dir = "01_styling"
+hint = """
+The `Stylize` trait adds shorthand methods to strings and spans, so
+`"online".green().bold()` is a `Span` with a green, bold style.
+A plain `&str` turns into an unstyled `Span` with `.into()`.
+
+Collect the three spans in a `vec![...]` and pass it to `Line::from`.
+
+https://docs.rs/ratatui/latest/ratatui/style/trait.Stylize.html
+https://docs.rs/ratatui/latest/ratatui/text/struct.Line.html
+"""
+
+# layout
+
+[[exercises]]
+name = "nested_layout"
+dir = "02_layout"
+hint = """
+Split in two steps:
+1. `Layout::vertical([Constraint::Length(3), Constraint::Fill(1)])` gives the
+   header and the main area.
+2. `Layout::horizontal([Constraint::Percentage(25), Constraint::Fill(1)])`
+   with `.spacing(1)` splits the main area into the sidebar and the content.
+
+`let [a, b] = layout.areas(area);` destructures the result.
+
+https://docs.rs/ratatui/latest/ratatui/layout/enum.Constraint.html
+"""
+
+# custom widgets
+
+[[exercises]]
+name = "custom_widget"
+dir = "03_custom_widgets"
+hint = """
+Loop over the columns with `for x in area.left()..area.right()`.
+`buf[(x, area.top())]` gives you a mutable `Cell`, and you can chain
+`.set_symbol("█").set_fg(Color::Green)` on it.
+
+A cell is filled when `x - area.left() < filled`.
+
+https://docs.rs/ratatui/latest/ratatui/widgets/trait.Widget.html
+https://docs.rs/ratatui/latest/ratatui/buffer/struct.Cell.html
+"""
+
+[[exercises]]
+name = "widget_ref"
+dir = "03_custom_widgets"
+hint = """
+Inside `render`, `self` is a `&UserCard`, so borrow its fields with
+`self.role.as_str()` instead of moving them.
+
+Build the status `Span` with `Stylize` (`"● online".green()`), then render a
+`Paragraph` of two `Line`s inside `Block::bordered().title(...)`. Built-in
+widgets compose: your widget can render other widgets into the same buffer.
+"""

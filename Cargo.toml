@@ -1,6 +1,17 @@
 # Don't edit the `bin` list manually. Run `rustlings dev update` after changing
 # exercises or solutions.
-bin = []
+bin = [
+  { name = "style", path = "exercises/01_styling/style.rs" },
+  { name = "style_sol", path = "solutions/01_styling/style.rs" },
+  { name = "styled_text", path = "exercises/01_styling/styled_text.rs" },
+  { name = "styled_text_sol", path = "solutions/01_styling/styled_text.rs" },
+  { name = "nested_layout", path = "exercises/02_layout/nested_layout.rs" },
+  { name = "nested_layout_sol", path = "solutions/02_layout/nested_layout.rs" },
+  { name = "custom_widget", path = "exercises/03_custom_widgets/custom_widget.rs" },
+  { name = "custom_widget_sol", path = "solutions/03_custom_widgets/custom_widget.rs" },
+  { name = "widget_ref", path = "exercises/03_custom_widgets/widget_ref.rs" },
+  { name = "widget_ref_sol", path = "solutions/03_custom_widgets/widget_ref.rs" },
+]
 
 [package]
 name = "ratlings"
