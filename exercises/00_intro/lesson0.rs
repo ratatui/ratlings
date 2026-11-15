@@ -3,6 +3,7 @@
 // Ratlings is a set of small exercises for learning Ratatui, the Rust library
 // for building terminal user interfaces.
 //
+//
 // Each lesson is one ordinary Rust file
 // like this one. You edit it in your editor,
 // and ratlings tells you when it is
@@ -27,13 +28,14 @@
 //
 // TODO: The sign is addressed to nobody
 // Put your name here, then press ?
-// to run the tests and see them go green.
-// That edit-and-check loop is the whole course.
-// Everything after this is just more Ratatui.
+// to run the tests and see them go green. That edit-and-check loop is the
+// whole course; everything after this is just more Ratatui.
 //
 // Hi Ratatui student!
 // Everything below this is just scaffolding.
 // It opens the terminal, draws render until a key is pressed,
 // and checks your work. It is the same in every lesson
-// and you never need to edit it.
-// Your work is above this line.
+// and you never need to edit it. Your work is above this line.
+pub fn render(frame: &mut ratatui::Frame) {
+    // Lesson 0: just show the welcome message, no interactive elements yet
+}
