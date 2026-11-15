@@ -24,8 +24,8 @@ the real size of your terminal with the lesson floating on top.
 
 This exercise was originally contributed as PR #3 to the ratatui/ratlings
 repository. It was designed to give students an experience of learning
-ratatui inside ratatui itself. The focus is on how to render lessons
-in-terminal, giving feedback as you edit, and figuring out how much
+ratatui inside ratatui itself. The focus is on how to render lessons in-terminal,
+giving feedback as you edit, and figuring out how much
 to hide versus show to students learning the framework
 
 The contributor wanted to give the student an experience of backcountry
