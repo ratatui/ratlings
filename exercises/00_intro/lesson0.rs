@@ -28,14 +28,82 @@
 //
 // TODO: The sign is addressed to nobody
 // Put your name here, then press ?
-// to run the tests and see them go green. That edit-and-check loop is the
-// whole course; everything after this is just more Ratatui.
+// to run the tests and see them go green.
+// That edit-and-check loop is the whole course.
+// Everything after this is just more Ratatui.
 //
 // Hi Ratatui student!
 // Everything below this is just scaffolding.
 // It opens the terminal, draws render until a key is pressed,
 // and checks your work. It is the same in every lesson
 // and you never need to edit it. Your work is above this line.
-pub fn render(frame: &mut ratatui::Frame) {
-    // Lesson 0: just show the welcome message, no interactive elements yet
+
+use ratatui::{
+    DefaultTerminal, Frame,
+    layout::{Constraint, Flex, Layout},
+    widgets::{Block, Padding, Paragraph},
+};
+use std::io::IsTerminal;
+
+const NAME: &str = "???";
+
+pub fn render(frame: &mut Frame) {
+    let [area] = Layout::horizontal([Constraint::Length(40)])
+        .flex(Flex::Center)
+        .areas(frame.area());
+    let [area] = Layout::vertical([Constraint::Length(6)])
+        .flex(Flex::Center)
+        .areas(area);
+    let sign = Paragraph::new(format!("Hello, {NAME}!
+Welcome to Ratlings."))
+        .centered()
+        .block(
+            Block::bordered()
+                .title(" ratlings ")
+                .padding(Padding::vertical(1)),
+        );
+    frame.render_widget(sign, area);
+}
+
+fn app(terminal: &mut DefaultTerminal) -> std::io::Result<()> {
+    loop {
+        terminal.draw(render)?;
+        if ratatui::crossterm::event::read()?.is_key_press() {
+            break Ok(());
+        }
+    }
+}
+
+fn main() -> std::io::Result<()> {
+    // Rustlings runs this binary with no terminal attached. Only take over the
+    // screen when there is a real one to take over.
+    if !std::io::stdout().is_terminal() {
+        return Ok(());
+    }
+    ratatui::run(app)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use ratatui::{Terminal, backend::TestBackend};
+
+    #[test]
+    fn the_sign_has_your_name_on_it() {
+        assert!(
+            !NAME.trim().is_empty() && NAME != "???",
+            "NAME is still the placeholder — put your own name in it"
+        );
+    }
+
+    #[test]
+    fn the_sign_says_hello_to_you() {
+        let mut terminal = Terminal::new(TestBackend::new(60, 9)).expect("test backend");
+        terminal.draw(render).expect("render frame");
+        let screen = terminal.backend().to_string();
+        assert!(
+            screen.contains(&format!("Hello, {NAME}!")),
+            "the sign should greet {NAME} by name"
+        );
+    }
 }
