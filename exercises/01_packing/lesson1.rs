@@ -20,9 +20,9 @@ use ratatui::{DefaultTerminal, Frame, widgets::Block};
 use std::io::IsTerminal;
 
 pub fn render(frame: &mut Frame) {
-    // TODO: Ratatui is rendering a block, but a plain `Block::new()` draws
-    // nothing at all — run it and you get an empty screen. Give him a bag he
-    // can actually see: a block with borders, titled " pack ".
+    
+    // TODO: A plain `Block::new()` renders nothing — run the lesson
+    // and you will see an empty screen. Give him a block with borders, titled
     //
     // Docs: https://docs.rs/ratatui/latest/ratatui/widgets/struct.Block.html
     frame.render_widget(Block::new(), frame.area());
