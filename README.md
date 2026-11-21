@@ -16,16 +16,24 @@ rustlings
 ```
 
 Rustlings watches your files and advances when an exercise passes. Common
-commands inside the runner are `h` for a hint, `l` to list exercises, and `q`
+commands inside the runner are `h` for a hint, `l` to list exercises and `q`
 to quit. To work on one exercise directly, run:
 
 ```sh
 rustlings run <exercise_name>
 ```
 
+## Story
+
+You are a chef leading a crew of rats on a trip to gather roots and herbs for
+Ratatouille. Pack the cooking gear, plan the route, follow the trail and cook
+together at camp!
+
 ## Developing exercises
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). The short version is:
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+The short version is:
 
 ```sh
 rustlings dev update
