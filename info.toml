@@ -3,8 +3,14 @@ format_version = 1
 welcome_message = """
 Welcome to Ratlings! 🐀
 
-These small exercises teach Ratatui one concept at a time. Run `rustlings`
-and follow the compiler feedback. Use `h` for a hint when you get stuck.
+You're a chef leading a crew of rats on a trip to gather roots and herbs for
+cooking Ratatouille. You'll pack the kitchen gear, plan the route,
+keep track of your supplies and cook together at camp!
+
+Along the way, you'll learn Ratatui one concept at a time.
+Press `h` for a hint when you get stuck.
+
+Happy cooking! 👨‍🍳
 """
 
 final_message = """
