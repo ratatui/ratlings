@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: My rat fellow, let's watch each portion move us closer to dinner.
-///
-/// Show how many portions are in the pot and how close we are to dinner.
+//! Gustau: My rat fellow, let's watch each portion move us closer to dinner.
+//!
+//! Show how many portions are in the pot and how close we are to dinner.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

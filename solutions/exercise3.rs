@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: My little rat chef, use the arrow keys to choose what goes into the pot.
-///
-/// Track the highlighted ingredient and move through the table with the arrow keys.
+//! Gustau: My little rat chef, use the arrow keys to choose what goes into the pot.
+//!
+//! Track the highlighted ingredient and move through the table with the arrow keys.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

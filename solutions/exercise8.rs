@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: Little rat chef, mark market day on our calendar.
-///
-/// Mark market day on a monthly calendar inside Gustau's popup.
+//! Gustau: Little rat chef, mark market day on our calendar.
+//!
+//! Mark market day on a monthly calendar inside Gustau's popup.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{
@@ -35,8 +35,10 @@ fn draw_pot(frame: &mut Frame, area: Rect, state: &State) {
                 color: Color::Gray,
             });
             for (i, &ingredient) in state.pot.iter().enumerate() {
-                let x = 2.75 + (i % 4) as f64 * 1.25;
-                let y = 1.5 + (i / 4) as f64;
+                let x = 2.75
+                    + f64::from(u32::try_from(i % 4).expect("ingredient position fits in u32"))
+                        * 1.25;
+                let y = 1.5 + f64::from(u32::try_from(i / 4).expect("ingredient row fits in u32"));
                 match ingredient {
                     0 => ctx.draw(&Circle::new(x, y, 0.4, Color::Red)),
                     1 => ctx.draw(&Rectangle {
@@ -143,7 +145,8 @@ pub fn update(state: &mut State, key: KeyEvent) {
         KeyCode::Enter if state.remaining[state.selected] > 0 => {
             state.remaining[state.selected] -= 1;
             state.pot.push(state.selected);
-            state.progress = state.pot.len() as f64 / kitchen::TOTAL_INGREDIENTS as f64;
+            state.progress = f64::from(u32::try_from(state.pot.len()).unwrap_or_default())
+                / f64::from(u32::try_from(kitchen::TOTAL_INGREDIENTS).unwrap_or_default());
         }
         KeyCode::Char('p') => state.popup = !state.popup,
         _ => {}
@@ -161,8 +164,10 @@ mod tests {
 
     #[test]
     fn exercise_goal_is_reached() {
-        let mut state = State::default();
-        state.popup = true;
+        let state = State {
+            popup: true,
+            ..State::default()
+        };
         let mut terminal = Terminal::new(TestBackend::new(80, 24)).unwrap();
         terminal.draw(|frame| render(frame, &state)).unwrap();
         assert!(

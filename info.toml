@@ -24,60 +24,48 @@ The Ratatouille is ready. Bon appétit! 🐀🍲
 
 [[exercises]]
 name = "exercise0"
-dir = "."
 hint = "Change `CHEF_COLOR` from white to any Ratatui color you like."
 
 [[exercises]]
 name = "exercise1"
-dir = "."
 hint = "Use `Block::bordered()` and give it the title ` Gustau's kitchen `."
 
 [[exercises]]
 name = "exercise2"
-dir = "."
 hint = "The `Table` and its rows are already prepared; render it in the kitchen area."
 
 [[exercises]]
 name = "exercise3"
-dir = "."
 hint = "Use `TableState` for the highlighted row. Update its index on Up and Down."
 
 [[exercises]]
 name = "exercise4"
-dir = "."
 hint = "Split the frame with `Layout::horizontal` and give both areas a block."
 
 [[exercises]]
 name = "exercise5"
-dir = "."
 hint = "Draw the pot with a `Rectangle`, its rim with a `Line`, and a handle with a `Circle`."
 
 [[exercises]]
 name = "exercise6"
-dir = "."
 hint = "On Enter, decrease remaining stock, push the ingredient index, then set progress to pot portions divided by `kitchen::TOTAL_INGREDIENTS`."
 
 [[exercises]]
 name = "exercise7"
-dir = "."
 hint = "Render `Clear` over `popup_area` before drawing the popup. Press `p` to toggle it."
 
 [[exercises]]
 name = "exercise8"
-dir = "."
 hint = "Create a `CalendarEventStore`, mark `market_day()`, then render `Monthly`."
 
 [[exercises]]
 name = "exercise9"
-dir = "."
 hint = "Style the wrapped notes paragraph with `Style` and `Stylize`."
 
 [[exercises]]
 name = "exercise10"
-dir = "."
 hint = "Render `.ratio(state.progress)` with contrasting `.filled_style()` and `.unfilled_style()`, then label the pot count out of 9."
 
 [[exercises]]
 name = "exercise11"
-dir = "."
 hint = "Build 32 values from `sin` and `state.tick`, then render the `Sparkline` below the pot."

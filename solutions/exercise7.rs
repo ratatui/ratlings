@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: My rat fellow, I found a market note. Let's pop it up clearly.
-///
-/// Open the market note and clear the area behind it so it is easy to read.
+//! Gustau: My rat fellow, I found a market note. Let's pop it up clearly.
+//!
+//! Open the market note and clear the area behind it so it is easy to read.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{
@@ -33,8 +33,10 @@ fn draw_pot(frame: &mut Frame, area: Rect, state: &State) {
                 color: Color::Gray,
             });
             for (i, &ingredient) in state.pot.iter().enumerate() {
-                let x = 2.75 + (i % 4) as f64 * 1.25;
-                let y = 1.5 + (i / 4) as f64;
+                let x = 2.75
+                    + f64::from(u32::try_from(i % 4).expect("ingredient position fits in u32"))
+                        * 1.25;
+                let y = 1.5 + f64::from(u32::try_from(i / 4).expect("ingredient row fits in u32"));
                 match ingredient {
                     0 => ctx.draw(&Circle::new(x, y, 0.4, Color::Red)),
                     1 => ctx.draw(&Rectangle {
@@ -140,7 +142,8 @@ pub fn update(state: &mut State, key: KeyEvent) {
         KeyCode::Enter if state.remaining[state.selected] > 0 => {
             state.remaining[state.selected] -= 1;
             state.pot.push(state.selected);
-            state.progress = state.pot.len() as f64 / kitchen::TOTAL_INGREDIENTS as f64;
+            state.progress = f64::from(u32::try_from(state.pot.len()).unwrap_or_default())
+                / f64::from(u32::try_from(kitchen::TOTAL_INGREDIENTS).unwrap_or_default());
         }
         KeyCode::Char('p') => state.popup = !state.popup,
         _ => {}

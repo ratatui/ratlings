@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: Little rat chef, let's give our sauce a dancing simmer!
-///
-/// Add a red sparkline under the pot to show the sauce simmering over time.
+//! Gustau: Little rat chef, let's give our sauce a dancing simmer!
+//!
+//! Add a red sparkline under the pot to show the sauce simmering over time.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{
@@ -36,8 +36,10 @@ fn draw_pot(frame: &mut Frame, area: Rect, state: &State) {
                 color: Color::Gray,
             });
             for (i, &ingredient) in state.pot.iter().enumerate() {
-                let x = 2.75 + (i % 4) as f64 * 1.25;
-                let y = 1.5 + (i / 4) as f64;
+                let x = 2.75
+                    + f64::from(u32::try_from(i % 4).expect("ingredient position fits in u32"))
+                        * 1.25;
+                let y = 1.5 + f64::from(u32::try_from(i / 4).expect("ingredient row fits in u32"));
                 match ingredient {
                     0 => ctx.draw(&Circle::new(x, y, 0.4, Color::Red)),
                     1 => ctx.draw(&Rectangle {
@@ -97,8 +99,16 @@ fn draw_popup(frame: &mut Frame, popup_area: Rect) {
 }
 
 fn simmer(tick: u64, width: usize) -> Vec<u64> {
+    let tick = f64::from(u32::try_from(tick % 628).unwrap_or_default()) / 10.0;
     (0..width)
-        .map(|i| (((i as f64 / 4.0 + tick as f64 / 10.0).sin() + 1.0) * 5.0) as u64)
+        .map(|i| {
+            let position = f64::from(u32::try_from(i).unwrap_or(u32::MAX)) / 4.0;
+            let height = ((position + tick).sin() + 1.0) * 5.0;
+            // The sine expression stays between zero and ten.
+            #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+            let height = height as u64;
+            height
+        })
         .collect()
 }
 
@@ -198,7 +208,8 @@ pub fn update(state: &mut State, key: KeyEvent) {
         KeyCode::Enter if state.remaining[state.selected] > 0 => {
             state.remaining[state.selected] -= 1;
             state.pot.push(state.selected);
-            state.progress = state.pot.len() as f64 / kitchen::TOTAL_INGREDIENTS as f64;
+            state.progress = f64::from(u32::try_from(state.pot.len()).unwrap_or_default())
+                / f64::from(u32::try_from(kitchen::TOTAL_INGREDIENTS).unwrap_or_default());
         }
         KeyCode::Char('p') => state.popup = !state.popup,
         _ => {}

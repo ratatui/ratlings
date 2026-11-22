@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: The pot is ready, my rat fellow. Let's draw its empty shape beside our list.
-///
-/// Draw an empty rectangular pot beside the ingredient list before we start cooking.
+//! Gustau: The pot is ready, my rat fellow. Let's draw its empty shape beside our list.
+//!
+//! Draw an empty rectangular pot beside the ingredient list before we start cooking.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

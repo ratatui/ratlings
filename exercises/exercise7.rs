@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: My rat fellow, I found a market note. Let's pop it up clearly.
-///
-/// Open the market note and clear the area behind it so it is easy to read.
+//! Gustau: My rat fellow, I found a market note. Let's pop it up clearly.
+//!
+//! Open the market note and clear the area behind it so it is easy to read.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

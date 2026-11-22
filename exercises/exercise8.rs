@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: Little rat chef, mark market day on our calendar.
-///
-/// Mark market day on a monthly calendar inside Gustau's popup.
+//! Gustau: Little rat chef, mark market day on our calendar.
+//!
+//! Mark market day on a monthly calendar inside Gustau's popup.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

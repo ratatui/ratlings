@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: Welcome, little rat chef! Choose a color for your chef badge and make it yours.
-///
-/// Choose a badge color so Gustau knows which little chef is in the kitchen.
+//! Gustau: Welcome, little rat chef! Choose a color for your chef badge and make it yours.
+//!
+//! Choose a badge color so Gustau knows which little chef is in the kitchen.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{
