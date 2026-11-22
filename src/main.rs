@@ -27,27 +27,29 @@ use ratatui::{
     text::{Line, Span, Text},
     widgets::{Block, Clear, Padding, Paragraph, Wrap},
 };
+use ratlings::kitchen::{self, State as KitchenState};
 
 // ─────────────────────────────── the registry ──────────────────────────────
 
 /// An exercise, as far as the viewer is concerned.
 struct Exercise {
-    /// The `[[bin]]` name, e.g. `lesson1`. Also the name `cargo test` needs.
+    /// The `[[bin]]` name, e.g. `exercise1`. Also the name `cargo test` needs.
     name: &'static str,
-    /// What the lesson is called on screen
+    /// Short, context-based exercise name shown on screen.
     title: &'static str,
-    /// Path from `src/`, e.g. `../exercises/01_packing/lesson1.rs`.
+    /// Path from `src/`, e.g. `../exercises/exercise1.rs`.
     path: &'static str,
     /// The one thing an exercise has to expose.
-    render: fn(&mut Frame),
+    render: kitchen::Render,
+    update: kitchen::Update,
     /// Its source, for the instructions written at the top of the file.
     source: &'static str,
 }
 
 impl Exercise {
-    /// Lesson 0 includes a tour of the viewer itself, so it gets a live checklist.
+    /// The welcome exercise includes a tour of the viewer, so it gets a live checklist.
     fn is_tour(&self) -> bool {
-        self.path.contains("/00_intro/")
+        self.name == "exercise0"
     }
 
     /// Where the file lives on disk, for watching it.
@@ -61,7 +63,7 @@ impl Exercise {
 }
 
 /// Exercises are ordinary `[[bin]]` targets, so the viewer includes their
-/// source directly. One line per lesson, in course order.
+/// source directly. One line per exercise, in course order.
 ///
 /// Under `cfg(test)` the real modules are swapped for stubs, so the viewer's
 /// own tests don't drag in every unsolved exercise's failing tests.
@@ -74,7 +76,8 @@ macro_rules! exercises {
             mod $name;
             #[cfg(test)]
             mod $name {
-                pub fn render(_: &mut ratatui::Frame) {}
+                pub fn render(_: &mut ratatui::Frame, _: &ratlings::kitchen::State) {}
+                pub fn update(_: &mut ratlings::kitchen::State, _: ratatui::crossterm::event::KeyEvent) {}
             }
         )*
         const EXERCISES: &[Exercise] = &[
@@ -83,6 +86,7 @@ macro_rules! exercises {
                 title: $title,
                 path: $path,
                 render: $name::render,
+                update: $name::update,
                 source: include_str!($path),
             },)*
         ];
@@ -90,52 +94,31 @@ macro_rules! exercises {
 }
 
 exercises! {
-    lesson0 => "Welcome to Ratlings", "../exercises/00_intro/lesson0.rs",
-    lesson1 => "A Bag You Can See", "../exercises/01_packing/lesson1.rs",
-    lesson2 => "Room for Everything", "../exercises/01_packing/lesson2.rs",
-    lesson3 => "Weighing In", "../exercises/01_packing/lesson3.rs",
-    lesson4 => "Pick a Weekend", "../exercises/02_planning/lesson4.rs",
-    lesson5 => "The Map", "../exercises/02_planning/lesson5.rs",
-    lesson6 => "The Climb", "../exercises/02_planning/lesson6.rs",
-    lesson7 => "The Matches", "../exercises/02_planning/lesson7.rs",
-    lesson8 => "The Bottle", "../exercises/03_the_trail/lesson8.rs",
-    lesson9 => "How Much Further", "../exercises/03_the_trail/lesson9.rs",
-    lesson10 => "Rest Stop", "../exercises/03_the_trail/lesson10.rs",
-    lesson11 => "The Trail Sign", "../exercises/03_the_trail/lesson11.rs",
-    lesson12 => "The Guidebook", "../exercises/03_the_trail/lesson12.rs",
-    lesson13 => "Embers", "../exercises/04_camp/lesson13.rs",
-    lesson14 => "The Menu", "../exercises/04_camp/lesson14.rs",
-    lesson15 => "Three Days", "../exercises/04_camp/lesson15.rs",
-}
-
-/// Map lesson names like `lesson1` to `Lesson 1`.
-fn display_name(name: &str) -> String {
-    let split = name.trim_end_matches(|c: char| c.is_ascii_digit()).len();
-    let (word, number) = name.split_at(split);
-    let mut out = String::new();
-    let mut chars = word.chars();
-    if let Some(first) = chars.next() {
-        out.extend(first.to_uppercase());
-        out.push_str(chars.as_str());
-    }
-    if !number.is_empty() {
-        out.push(' ');
-        out.push_str(number);
-    }
-    out
+    exercise0 => "Chef Badge", "../exercises/exercise0.rs",
+    exercise1 => "Kitchen", "../exercises/exercise1.rs",
+    exercise2 => "Ingredients", "../exercises/exercise2.rs",
+    exercise3 => "Selection", "../exercises/exercise3.rs",
+    exercise4 => "Kitchen Layout", "../exercises/exercise4.rs",
+    exercise5 => "Pot", "../exercises/exercise5.rs",
+    exercise6 => "Add to Pot", "../exercises/exercise6.rs",
+    exercise7 => "Popup", "../exercises/exercise7.rs",
+    exercise8 => "Market Day", "../exercises/exercise8.rs",
+    exercise9 => "Chef Notes", "../exercises/exercise9.rs",
+    exercise10 => "Cooking Progress", "../exercises/exercise10.rs",
+    exercise11 => "Simmer", "../exercises/exercise11.rs",
 }
 
 /// Hints live in `info.toml`, where `rustlings` reads them from.
 const INFO: &str = include_str!("../info.toml");
 
-// ──────────────────────────────── the lesson ───────────────────────────────
+// ──────────────────────────────── the exercise ───────────────────────────────
 
-struct Lesson {
+struct ExerciseHelp {
     instructions: String,
     hint: String,
 }
 
-impl Lesson {
+impl ExerciseHelp {
     fn for_exercise(name: &str, source: &str) -> Self {
         Self {
             instructions: instructions(source),
@@ -329,8 +312,8 @@ const RESUME: &str = "RATLINGS_RESUME";
 
 // ──────────────────────────────── progress ─────────────────────────────────
 
-/// Which lessons have passed, written to disk when a lesson's tests go green.
-/// Ensures that a user doesn't open up to Lesson 0 against after closing and
+/// Which exercises have passed, written to disk when an exercise's tests go green.
+/// Ensures that a user doesn't reopen the first exercise after closing and
 /// reopnening with `ratlings view`.
 struct Progress {
     done: BTreeSet<String>,
@@ -363,7 +346,7 @@ impl Progress {
 
     fn mark_done(&mut self, name: &str) {
         if self.done.insert(name.to_string()) {
-            let mut out = String::from("# ratlings progress — one finished lesson per line\n");
+            let mut out = String::from("# ratlings progress — one finished exercise per line\n");
             for n in &self.done {
                 out.push_str(n);
                 out.push('\n');
@@ -372,7 +355,7 @@ impl Progress {
         }
     }
 
-    /// The first lesson not yet passed, or the last one if all are.
+    /// The first exercise not yet passed, or the last one if all are.
     fn next_index(&self) -> usize {
         EXERCISES
             .iter()
@@ -383,8 +366,8 @@ impl Progress {
 
 // ──────────────────────────────── the tour ─────────────────────────────────
 
-/// What the student has tried so far. Lesson 0 shows this as a checklist
-/// that ticks off live; every other lesson ignores it.
+/// What the student has tried so far. The welcome exercise shows this as a
+/// checklist that ticks off live; every other exercise ignores it.
 #[derive(Default)]
 #[allow(clippy::struct_excessive_bools)]
 struct Tour {
@@ -477,7 +460,7 @@ enum Panel {
 struct Viewer {
     /// Index into `EXERCISES`.
     index: usize,
-    lesson: Lesson,
+    help: ExerciseHelp,
     tour: Tour,
     focus: Focus,
     panel: Panel,
@@ -493,6 +476,7 @@ struct Viewer {
     /// Set once a rebuild succeeds: `run` returns and `main` execs the new binary.
     restart: bool,
     progress: Progress,
+    kitchen: KitchenState,
 }
 
 const AMBER: Color = Color::Rgb(240, 190, 110);
@@ -502,15 +486,15 @@ impl Viewer {
     fn open(index: usize) -> Self {
         let ex = &EXERCISES[index];
         // This is covering a sort of edge case. We want to give the user
-        // some dopamine if they solved the lesson while `ratlings view` was
+        // some dopamine if they solved the exercise while `ratlings view` was
         // _not_ open, and then the re-opened `ratligns view`.
-        // If the student solved this lesson while the viewer was closed,
+        // If the student solved this exercise while the viewer was closed,
         // the pass arrives in a moment and gets its celebration; otherwise nothing
         // would visible happen.
         let rx = (!cfg!(test)).then(|| spawn_tests(ex.name));
         Self {
             index,
-            lesson: Lesson::for_exercise(ex.name, ex.source),
+            help: ExerciseHelp::for_exercise(ex.name, ex.source),
             tour: Tour::default(),
             focus: Focus::Ratlings,
             panel: Panel::Instructions,
@@ -527,6 +511,7 @@ impl Viewer {
             build_rx: None,
             restart: false,
             progress: Progress::load(),
+            kitchen: KitchenState::default(),
         }
     }
 
@@ -613,9 +598,8 @@ impl Viewer {
             return;
         }
         match self.focus {
-            // The exercise drives itself. A future exercise with its own
-            // `update` would receive the key here.
-            Focus::Canvas => {}
+            // Send canvas keys to the active exercise so input updates its state.
+            Focus::Canvas => (self.exercise().update)(&mut self.kitchen, key),
             Focus::Ratlings => match key.code {
                 KeyCode::Char('i') => self.toggle(Panel::Instructions),
                 KeyCode::Char('h') => {
@@ -657,7 +641,7 @@ impl Viewer {
     fn draw(&self, frame: &mut Frame) {
         // The canvas is the entire terminal, so the exercise's constraints
         // resolve against the real size
-        canvas(frame, frame.area(), self.exercise().render);
+        canvas(frame, frame.area(), self.exercise().render, &self.kitchen);
 
         if self.focus == Focus::Ratlings {
             self.draw_chrome(frame);
@@ -672,7 +656,7 @@ impl Viewer {
             Block::bordered()
                 .title(format!(
                     " student canvas · {}{} ",
-                    display_name(self.exercise().name),
+                    self.exercise().title,
                     if self.progress.is_done(self.exercise().name) {
                         " ✓"
                     } else {
@@ -687,7 +671,7 @@ impl Viewer {
         let bar = Rect::new(0, area.height - 1, area.width, 1);
         frame.render_widget(Clear, bar);
         let next = if self.passed() && self.has_next() {
-            "n next lesson   "
+            "n next exercise   "
         } else {
             ""
         };
@@ -712,18 +696,14 @@ impl Viewer {
                     text.push_str(&self.tour.checklist());
                     text.push_str("\n\n");
                 }
-                text.push_str(&self.lesson.instructions);
+                text.push_str(&self.help.instructions);
                 self.draw_reading(
                     frame,
-                    &format!(
-                        " ratlings · {} · {} ",
-                        display_name(self.exercise().name),
-                        self.exercise().title
-                    ),
+                    &format!(" ratlings · {} ", self.exercise().title),
                     &text,
                 );
             }
-            Panel::Hint => self.draw_reading(frame, " ratlings · hint ", &self.lesson.hint),
+            Panel::Hint => self.draw_reading(frame, " ratlings · hint ", &self.help.hint),
             Panel::Feedback => self.draw_feedback(frame),
         }
     }
@@ -809,7 +789,7 @@ impl Viewer {
                 (_, Tests::Idle | Tests::Running) => "running `cargo test`…".to_string(),
                 (_, Tests::Done(r)) if r.ok() && self.has_next() => {
                     format!(
-                        "{} passed — this one's done ✓\n\npress `n` for the next lesson",
+                        "{} passed — this one's done ✓\n\npress `n` for the next exercise",
                         r.passed
                     )
                 }
@@ -927,11 +907,11 @@ fn wrapped_lines(text: &str, width: usize) -> usize {
 }
 
 /// Draw a render fn into an off-screen buffer, then copy the cells into `area`
-fn canvas(frame: &mut Frame, area: Rect, render: fn(&mut Frame)) {
+fn canvas(frame: &mut Frame, area: Rect, render: kitchen::Render, state: &KitchenState) {
     // Infallible: `TestBackend` has nothing to fail at.
     let mut inner = Terminal::new(TestBackend::new(area.width, area.height))
         .expect("test backend is infallible");
-    if inner.draw(render).is_err() {
+    if inner.draw(|frame| render(frame, state)).is_err() {
         return;
     }
     let src: &Buffer = inner.backend().buffer();
@@ -946,6 +926,7 @@ fn canvas(frame: &mut Frame, area: Rect, render: fn(&mut Frame)) {
 /// Returns the state to resume from if the viewer should restart, `None` on quit.
 fn run(terminal: &mut DefaultTerminal, mut viewer: Viewer) -> std::io::Result<Option<String>> {
     loop {
+        viewer.kitchen.tick = viewer.kitchen.tick.wrapping_add(1);
         terminal.draw(|f| viewer.draw(f))?;
         viewer.watch();
         if viewer.restart {
@@ -1057,7 +1038,7 @@ mod tests {
         let mut t = Terminal::new(TestBackend::new(90, 30)).unwrap();
         t.draw(|f| viewer.draw(f)).unwrap();
         let screen = t.backend().to_string();
-        assert!(screen.contains("Lesson 1 · A Bag You Can See"));
+        assert!(screen.contains("ratlings · Kitchen"));
         let v0 = Viewer::open(0);
         let mut t0 = Terminal::new(TestBackend::new(100, 40)).unwrap();
         t0.draw(|f| v0.draw(f)).unwrap();
@@ -1102,14 +1083,7 @@ mod tests {
         assert_eq!(v.panel, Panel::Instructions);
         let mut t = Terminal::new(TestBackend::new(90, 30)).unwrap();
         t.draw(|f| v.draw(f)).unwrap();
-        assert!(t.backend().to_string().contains("Lesson 1"));
-    }
-
-    #[test]
-    fn display_names_read_like_titles() {
-        assert_eq!(display_name("lesson1"), "Lesson 1");
-        assert_eq!(display_name("lesson12"), "Lesson 12");
-        assert_eq!(display_name("intro"), "Intro");
+        assert!(t.backend().to_string().contains("Kitchen"));
     }
 
     #[test]
@@ -1171,10 +1145,10 @@ mod tests {
     }
 
     #[test]
-    fn progress_picks_the_first_unfinished_lesson() {
+    fn progress_picks_the_first_unfinished_exercise() {
         assert_eq!(Progress::parse("").next_index(), 0);
-        assert_eq!(Progress::parse("# note\nlesson0\n").next_index(), 1);
-        assert_eq!(Progress::parse("lesson1\n").next_index(), 0);
+        assert_eq!(Progress::parse("# note\nexercise0\n").next_index(), 1);
+        assert_eq!(Progress::parse("exercise1\n").next_index(), 0);
         let all: String = EXERCISES
             .iter()
             .map(|e| e.name)
