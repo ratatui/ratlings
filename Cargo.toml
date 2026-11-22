@@ -1,6 +1,31 @@
 # Don't edit the `bin` list manually. Run `rustlings dev update` after changing
 # exercises or solutions.
-bin = []
+bin = [
+  { name = "exercise0", path = "exercises/exercise0.rs" },
+  { name = "exercise0_sol", path = "solutions/exercise0.rs" },
+  { name = "exercise1", path = "exercises/exercise1.rs" },
+  { name = "exercise1_sol", path = "solutions/exercise1.rs" },
+  { name = "exercise2", path = "exercises/exercise2.rs" },
+  { name = "exercise2_sol", path = "solutions/exercise2.rs" },
+  { name = "exercise3", path = "exercises/exercise3.rs" },
+  { name = "exercise3_sol", path = "solutions/exercise3.rs" },
+  { name = "exercise4", path = "exercises/exercise4.rs" },
+  { name = "exercise4_sol", path = "solutions/exercise4.rs" },
+  { name = "exercise5", path = "exercises/exercise5.rs" },
+  { name = "exercise5_sol", path = "solutions/exercise5.rs" },
+  { name = "exercise6", path = "exercises/exercise6.rs" },
+  { name = "exercise6_sol", path = "solutions/exercise6.rs" },
+  { name = "exercise7", path = "exercises/exercise7.rs" },
+  { name = "exercise7_sol", path = "solutions/exercise7.rs" },
+  { name = "exercise8", path = "exercises/exercise8.rs" },
+  { name = "exercise8_sol", path = "solutions/exercise8.rs" },
+  { name = "exercise9", path = "exercises/exercise9.rs" },
+  { name = "exercise9_sol", path = "solutions/exercise9.rs" },
+  { name = "exercise10", path = "exercises/exercise10.rs" },
+  { name = "exercise10_sol", path = "solutions/exercise10.rs" },
+  { name = "exercise11", path = "exercises/exercise11.rs" },
+  { name = "exercise11_sol", path = "solutions/exercise11.rs" },
+]
 
 [package]
 name = "ratlings"
@@ -12,6 +37,7 @@ publish = false
 
 [dependencies]
 ratatui = "0.30.2"
+time = "0.3"
 
 [lints.rust]
 unsafe_code = "forbid"
