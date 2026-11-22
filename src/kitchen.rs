@@ -38,6 +38,11 @@ impl Default for State {
 pub type Render = fn(&mut Frame, &State);
 pub type Update = fn(&mut State, KeyEvent);
 
+/// Run the kitchen dashboard until the user presses Escape.
+///
+/// # Errors
+///
+/// Returns an I/O error if terminal setup, drawing or event handling fails.
 pub fn run(render: Render, update: Update) -> std::io::Result<()> {
     if !std::io::stdout().is_terminal() {
         return Ok(());

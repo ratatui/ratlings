@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: Now then, little rat chef, make room for our ingredients and the pot.
-///
-/// Split the kitchen into two areas for the ingredient list and the pot.
+//! Gustau: Now then, little rat chef, make room for our ingredients and the pot.
+//!
+//! Split the kitchen into two areas for the ingredient list and the pot.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

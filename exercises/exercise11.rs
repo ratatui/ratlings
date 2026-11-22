@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: Little rat chef, let's give our sauce a dancing simmer!
-///
-/// Add a red sparkline under the pot to show the sauce simmering over time.
+//! Gustau: Little rat chef, let's give our sauce a dancing simmer!
+//!
+//! Add a red sparkline under the pot to show the sauce simmering over time.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

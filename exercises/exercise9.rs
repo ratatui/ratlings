@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: These are my cooking notes, little rat chef. Give them a little flair.
-///
-/// Style and wrap Gustau's market note so the cooking advice is easy to read.
+//! Gustau: These are my cooking notes, little rat chef. Give them a little flair.
+//!
+//! Style and wrap Gustau's market note so the cooking advice is easy to read.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

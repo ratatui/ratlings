@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: Little rat chef, press Enter to add one portion. Mind the stock!
-///
-/// Press Enter to add the selected ingredient and use up one portion of its stock.
+//! Gustau: Little rat chef, press Enter to add one portion. Mind the stock!
+//!
+//! Press Enter to add the selected ingredient and use up one portion of its stock.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

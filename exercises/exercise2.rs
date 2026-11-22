@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: Little rat chef, first we need a tidy list of our ingredients.
-///
-/// Render the ingredient table so we can check each ingredient and its stock.
+//! Gustau: Little rat chef, first we need a tidy list of our ingredients.
+//!
+//! Render the ingredient table so we can check each ingredient and its stock.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{

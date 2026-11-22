@@ -1,8 +1,8 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 
-/// Gustau: My rat fellow, let's give this kitchen a proper frame.
-///
-/// Give the kitchen a rounded frame and keep the chef badge inside it.
+//! Gustau: My rat fellow, let's give this kitchen a proper frame.
+//!
+//! Give the kitchen a rounded frame and keep the chef badge inside it.
 
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 use ratatui::{
