@@ -3,11 +3,9 @@
 Small, interactive exercises for learning [Ratatui](https://ratatui.rs),
 powered by [Rustlings](https://rustlings.rust-lang.org).
 
-## Cook along with Gustau
-
-You are a rat learning to cook Ratatouille from Chef Gustau. Build one kitchen
-dashboard: choose ingredients from a table, add them to a pot, check the market
-date and watch the cooking progress!
+> You are a rat learning to cook Ratatouille from Chef Gustau. Build one kitchen
+> dashboard: choose ingredients from a table, add them to a pot, check the market
+> date and watch the cooking progress!
 
 ![](src/assets/kitchen.gif)
 
