@@ -1,71 +1,22 @@
 format_version = 1
 
 welcome_message = """
-Welcome to Ratlings, little chef! 🐀
+Welcome to Ratlings! 🐀
 
-My name is Auguste Gusteau, and I'll be your guide on this cooking journey!
-
-Together, we'll build a Ratatouille kitchen dashboard. You'll choose ingredients
-from a table, add them to the pot, watch the cooking progress and peek at my
-market note.
-
-Remember, cooking is an art that anyone can master with the right compiler and a bit of terminal magic!
-
-Press `h` for a hint any time!
+These small exercises teach Ratatui one concept at a time. Run `rustlings`
+and follow the compiler feedback. Use `h` for a hint when you get stuck.
 """
 
 final_message = """
-Magnifique, little chef! You chose your ingredients, filled the pot, and brought
-your kitchen dashboard to life. Remember, anyone can cook when curiosity is
-your secret ingredient.
-
-The Ratatouille is ready. Bon appétit! 🐀🍲
+You finished Ratlings! 🎉
 """
 
-[[exercises]]
-name = "exercise0"
-hint = "Change `CHEF_COLOR` from white to any Ratatui color you like."
+exercises = []
 
-[[exercises]]
-name = "exercise1"
-hint = "Use `Block::bordered()` and give it the title ` Gustau's kitchen `."
-
-[[exercises]]
-name = "exercise2"
-hint = "The `Table` and its rows are already prepared; render it in the kitchen area."
-
-[[exercises]]
-name = "exercise3"
-hint = "Use `TableState` for the highlighted row. Update its index on Up and Down."
-
-[[exercises]]
-name = "exercise4"
-hint = "Split the frame with `Layout::horizontal` and give both areas a block."
-
-[[exercises]]
-name = "exercise5"
-hint = "Draw the pot with a `Rectangle`, its rim with a `Line`, and a handle with a `Circle`."
-
-[[exercises]]
-name = "exercise6"
-hint = "On Enter, decrease remaining stock, push the ingredient index, then set progress to pot portions divided by `kitchen::TOTAL_INGREDIENTS`."
-
-[[exercises]]
-name = "exercise7"
-hint = "Render `Clear` over `popup_area` before drawing the popup. Press `p` to toggle it."
-
-[[exercises]]
-name = "exercise8"
-hint = "Create a `CalendarEventStore`, mark `market_day()`, then render `Monthly`."
-
-[[exercises]]
-name = "exercise9"
-hint = "Style the wrapped notes paragraph with `Style` and `Stylize`."
-
-[[exercises]]
-name = "exercise10"
-hint = "Render `.ratio(state.progress)` with contrasting `.filled_style()` and `.unfilled_style()`, then label the pot count out of 9."
-
-[[exercises]]
-name = "exercise11"
-hint = "Build 32 values from `sin` and `state.tick`, then render the `Sparkline` below the pot."
+# Add exercise metadata here. See CONTRIBUTING.md and the Rustlings community
+# exercises guide: https://rustlings.rust-lang.org/community-exercises/
+#
+# [[exercises]]
+# name = "example"
+# dir = "section"
+# hint = "A helpful hint."

@@ -7,7 +7,7 @@ working solution.
 ## Add an exercise
 
 1. Add its metadata to `info.toml` in curriculum order.
-2. Add matching files at `exercises/exerciseN.rs` and `solutions/exerciseN.rs`.
+2. Add matching files under `exercises/<section>/` and `solutions/<section>/`.
 3. Keep terminal I/O out of tests. Prefer `ratatui::backend::TestBackend` or
    render directly into a `ratatui::buffer::Buffer`.
 4. Regenerate the binary list and validate everything:
@@ -18,6 +18,6 @@ working solution.
    cargo fmt --check
    ```
 
-Each step should carry the working kitchen dashboard forward and add one small
-change. Keep Gustau's intro to one short line. Exercises should start incomplete
-while every solution compiles and passes. Use a concise hint when needed.
+Exercises should start incomplete (usually with `todo!()`), while every
+solution must compile and pass. Use links to the official Ratatui documentation
+in hints when a concept needs more background.
