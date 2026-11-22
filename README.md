@@ -1,39 +1,41 @@
 # Ratlings 🐀
 
 Small, interactive exercises for learning [Ratatui](https://ratatui.rs),
-powered by [Rustlings](https://rustlings.rust-lang.org) 🦀
+powered by [Rustlings](https://rustlings.rust-lang.org).
+
+## Cook along with Gustau
+
+You are a rat learning to cook Ratatouille from Chef Gustau. Build one kitchen
+dashboard: choose ingredients from a table, add them to a pot, check the market
+date and watch the cooking progress!
+
+![](src/assets/kitchen.gif)
 
 ## Getting started
 
-Install Rustlings, clone this repository, and start the exercise runner:
+Install Rustlings, clone this repository and start the exercises:
 
-```sh
+```bash
 cargo install rustlings
 git clone https://github.com/ratatui/ratlings
+```
 
+```bash
 cd ratlings
 rustlings
 ```
 
-Rustlings watches your files and advances when an exercise passes. Common
-commands inside the runner are `h` for a hint, `l` to list exercises and `q`
-to quit. To work on one exercise directly, run:
+Rustlings opens the next unfinished exercise.
 
-```sh
-rustlings run <exercise_name>
-```
+1. Edit the file it names in `exercises/`, fix the TODO and save it.
+2. Follow the compiler feedback, then continue when Rustlings marks the exercise as complete.
+3. Use `h` for a hint, `l` to list exercises, `c` to check all exercises, `x` to reset the current exercise and `q` to quit.
 
-## Story
-
-You are a chef leading a crew of rats on a trip to gather roots and herbs for
-Ratatouille. Pack the cooking gear, plan the route, follow the trail and cook
-together at camp!
+Each exercise adds one small piece to the same kitchen dashboard!
 
 ## Developing exercises
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-The short version is:
 
 ```sh
 rustlings dev update
