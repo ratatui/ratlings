@@ -38,17 +38,32 @@ fn main() -> std::io::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ratatui::{Terminal, backend::TestBackend};
+    use ratatui::{Terminal, backend::TestBackend, buffer::Cell};
 
+    fn screen(terminal: &Terminal<TestBackend>) -> Vec<String> {
+        let buffer = terminal.backend().buffer();
+        let width = buffer.area().width as usize;
+        buffer
+            .content()
+            .chunks(width)
+            .map(|row| row.iter().map(Cell::symbol).collect())
+            .collect()
+    }
     #[test]
     fn exercise_goal_is_reached() {
-        let mut terminal = Terminal::new(TestBackend::new(80, 24)).unwrap();
+        let mut terminal = Terminal::new(TestBackend::new(24, 4)).unwrap();
         terminal
             .draw(|frame| render(frame, &State::default()))
             .unwrap();
-        assert!(
-            terminal.backend().to_string().contains("Gustau's Kitchen"),
-            "render a rounded kitchen block titled Gustau's Kitchen"
+        assert_eq!(
+            screen(&terminal),
+            [
+                "╭ Gustau's Kitchen ────╮",
+                "│Little rat chef       │",
+                "│                      │",
+                "╰──────────────────────╯",
+            ],
+            "draw a rounded kitchen block with the chef badge inside it"
         );
     }
 }
